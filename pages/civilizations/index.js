@@ -1,29 +1,22 @@
 import styles from "../../styles/Home.module.css";
-
+import { nameState } from "../../atoms/name";
 import { useState } from "react";
 import Image from "next/image";
+import { useRecoilValue } from "recoil";
+import { fetchCivilizationsSelector } from "../../selectors/name";
 function CommentsPage() {
-  const [comments, setComments] = useState([]);
-  const fetchComments = async () => {
-    const response = await fetch("/api/civilizations");
-    const data = await response.json();
-    console.log("data", data);
-    setComments(data);
-  };
+  const response = useRecoilValue(fetchCivilizationsSelector);
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <div
-          onClick={() => {
-            fetchComments();
-          }}
-        >
-          {!comments?.civilizations?.length && (
+        <div>
+          {!response?.length && (
             <h1 className={styles.title}>load civilizations</h1>
           )}
         </div>
-        {comments?.civilizations?.map((item) => {
-          return <div key={item.id}>{item.name}</div>;
+        {response?.map((item) => {
+          return <div key={item.index}>{item.name}</div>;
         })}
       </main>
 

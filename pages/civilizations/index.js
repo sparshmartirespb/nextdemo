@@ -1,23 +1,49 @@
 import styles from "../../styles/Home.module.css";
-import { nameState } from "../../atoms/name";
+import { civilizationsUrl } from "../../atoms/name";
 import { useState } from "react";
 import Image from "next/image";
 import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { fetchCivilizationsSelector } from "../../selectors/name";
 function CommentsPage() {
+  const [name, setName] = useRecoilState(civilizationsUrl);
   const response = useRecoilValue(fetchCivilizationsSelector);
 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <div>
-          {!response?.length && (
-            <h1 className={styles.title}>load civilizations</h1>
-          )}
+          {"Click on the button to get more infor of the particular rate id "}
         </div>
-        {response?.map((item) => {
-          return <div key={item.index}>{item.name}</div>;
-        })}
+        <div
+          onClick={() => {
+            setName("PINDUF8");
+          }}
+          style={{
+            cursor: "pointer",
+            padding: 4,
+            backgroundColor: "brown",
+            margin: 4,
+          }}
+        >
+          {"PINDUF8"}
+        </div>
+        <div
+          onClick={() => {
+            setName("PWKQ1KG");
+          }}
+          style={{
+            cursor: "pointer",
+            padding: 4,
+            backgroundColor: "brown",
+          }}
+        >
+          {"PWKQ1KG"}
+        </div>
+        <div>Rate: {response?.rate}</div>
+        <div>Rate ID: {response?.rate_id}</div>
+        <div>Ask : {response?.ticker?.ask}</div>
+        <div>Bid : {response?.ticker?.bid}</div>
       </main>
 
       <footer className={styles.footer}>

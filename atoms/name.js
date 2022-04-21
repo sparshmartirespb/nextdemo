@@ -13,5 +13,6 @@ export const apiData = atom({
     rate_id: "",
     bid: "",
     ask: "",
+    code: "",
   }
 })

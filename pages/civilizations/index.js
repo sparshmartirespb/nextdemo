@@ -9,7 +9,7 @@ import "react-dropdown/style.css";
 
 function CommentsPage() {
   const [response, setResponse] = useRecoilState(rateIdSelector);
-  const [{ rate, rate_id, bid, ask }, setApiData] = useRecoilState(apiData);
+  const [{ rate, rate_id, bid, ask, code }, setApiData] = useRecoilState(apiData);
 
   useEffect(() => {
     const getData = async () => {
@@ -29,6 +29,7 @@ function CommentsPage() {
           rate_id: data.rate_id,
           bid: data.ticker.bid,
           ask: data.ticker.ask,
+          code: data.market.code,
         });
       } catch (err) {
         throw err;
@@ -52,6 +53,7 @@ function CommentsPage() {
             className={styles.rateDropdown}
           />
           <div className={styles.rates}>
+            <div className={styles.codeDisplay}>{code}</div>
             <div>Rate: {rate}</div>
             <div>Rate ID: {rate_id}</div>
             <div>Ask : {ask}</div>

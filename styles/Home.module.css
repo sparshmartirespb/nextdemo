@@ -108,6 +108,25 @@
   margin-left: 0.5rem;
 }
 
+.rateDropdown {
+  margin-bottom: 12px;
+}
+
+.rateCard {
+  background-color: #F7B8D4;
+  padding: 3em;
+  border-radius: 8px;
+  box-shadow: 4px 4px #e0e0e0;
+}
+
+.rates {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 120px;
+  width: 240px;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

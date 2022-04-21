@@ -1,53 +1,64 @@
 import { useEffect } from "react";
 import styles from "../../styles/Home.module.css";
-import { rateID } from "../../atoms/name";
-import { useState } from "react";
-import Image from "next/image";
-import { useRecoilValue } from "recoil";
+import { apiData, rateID } from "../../atoms/name";
 import { useRecoilState } from "recoil";
-import { fetchCivilizationsSelector } from "../../selectors/name";
+import { rateIdSelector } from "../../selectors/name";
 
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+
 function CommentsPage() {
-  const [name, setName] = useRecoilState(rateID);
-  // useEffect(() => {
-  //   setName("PWKQ1KG");
-  // }, []);
-  const response = useRecoilValue(fetchCivilizationsSelector);
-  console.log(response);
+  const [response, setResponse] = useRecoilState(rateIdSelector);
+  const [{ rate, rate_id, bid, ask }, setApiData] = useRecoilState(apiData);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await fetch(
+          `${"https://api.n.exchange/en/api/v1/rate/"}${response}${"/"}`,
+          {
+            method: "GET",
+            headers: {
+              accept: "application/json",
+            },
+          }
+        );
+        const data = await res.json();
+        setApiData({
+          rate: data.rate,
+          rate_id: data.rate_id,
+          bid: data.ticker.bid,
+          ask: data.ticker.ask,
+        });
+      } catch (err) {
+        throw err;
+      }
+    };
+    getData();
+  }, [response, setApiData]);
 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <div>{"select particular rate id to get more info "}</div>
-        <Dropdown
-          options={["PINDUF8", "PWKQ1KG"]}
-          onChange={(item) => {
-            setName(item.value);
-          }}
-          value={"PINDUF8"}
-          placeholder="Select an option"
-        />
-
-        <div>Rate: {response?.rate}</div>
-        <div>Rate ID: {response?.rate_id}</div>
-        <div>Ask : {response?.ticker?.ask}</div>
-        <div>Bid : {response?.ticker?.bid}</div>
+        <h2>select particular rate id to get more info</h2>
+        <div className={styles.rateCard}>
+          <Dropdown
+            options={["PINDUF8", "PWKQ1KG"]}
+            onChange={(item) => {
+              setResponse(item.value);
+            }}
+            value={"PINDUF8"}
+            placeholder="Select an option"
+            className={styles.rateDropdown}
+          />
+          <div className={styles.rates}>
+            <div>Rate: {rate}</div>
+            <div>Rate ID: {rate_id}</div>
+            <div>Ask : {ask}</div>
+            <div>Bid : {bid}</div>
+          </div>
+        </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
   );
 }

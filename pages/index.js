@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
+import { InlineWidget } from "react-calendly";
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -12,9 +13,18 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
+        {/* <h1 className={styles.title}>
           <Link href="/rates"> Welcome to Rate Detector</Link>
-        </h1>
+        </h1> */}
+        <div>
+          <InlineWidget
+            url="https://calendly.com/gorish/40min"
+            styles={{
+              width: "100vw",
+              height: "100vh",
+            }}
+          />
+        </div>
       </main>
 
       <footer className={styles.footer}>

@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
-import { InlineWidget } from "react-calendly";
+import Cal from "@calcom/embed-react";
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -12,20 +12,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        {/* <h1 className={styles.title}>
-          <Link href="/rates"> Welcome to Rate Detector</Link>
-        </h1> */}
-        <div>
-          <InlineWidget
-            url="https://calendly.com/gorish/40min"
-            styles={{
-              width: "100vw",
-              height: "100vh",
-            }}
-          />
-        </div>
-      </main>
+      <Cal
+        calLink="sparsh-martires-3hsoit"
+        config={{
+          name: "Sparsh Martires",
+          email: "sparsh@purebillion.tech",
+          theme: "dark",
+        }}
+        styles={{
+          width: 100,
+          height: 100,
+        }}
+      />
 
       <footer className={styles.footer}>
         <a

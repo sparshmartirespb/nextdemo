@@ -19,10 +19,6 @@ export default function Home() {
           email: "sparsh@purebillion.tech",
           theme: "dark",
         }}
-        styles={{
-          width: 100,
-          height: 100,
-        }}
       />
 
       <footer className={styles.footer}>

@@ -3,11 +3,11 @@ import styles from "../../styles/Home.module.css";
 import { apiData, rateID } from "../../atoms/name";
 import { useRecoilState } from "recoil";
 import { rateIdSelector } from "../../selectors/name";
-
+import { getAllRates } from "../../lib/users";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 
-function CommentsPage() {
+const Rates = ({ allRates }) => {
   const [response, setResponse] = useRecoilState(rateIdSelector);
   const [apisData, setApiData] = useRecoilState(apiData);
 
@@ -47,6 +47,7 @@ function CommentsPage() {
     getData();
   }, [response]);
 
+  console.log("ll", allRates);
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -81,5 +82,15 @@ function CommentsPage() {
       </main>
     </div>
   );
-}
-export default CommentsPage;
+};
+
+export const getStaticProps = async (context) => {
+  console.log("ll", context.query);
+  const allRates = await getAllRates();
+  return {
+    props: {
+      allRates,
+    },
+  };
+};
+export default Rates;
